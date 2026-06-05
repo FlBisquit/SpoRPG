@@ -20,27 +20,40 @@ var dash_timer = 0.0
 var dash_direction = Vector3.ZERO
 var friction = 20.0
 
-
+@onready var spell_choise_menu: Control = $CanvasLayer/SpellChoiseMenu
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera_3d: Camera3D = $CameraPivot/Camera3D
 @onready var pos = $stuff/cast_pos
 @onready var hitmarker: AudioStreamPlayer3D = $hitmarker
 
-var spell = load("res://objs/spells/sparkle.tscn")
+var spells = {"fireball": "res://objs/spells/fireball.tscn",
+	"sparkle":"res://objs/spells/sparkle.tscn"
+}
+
+var spell = load(spells["fireball"])
+
+func _on_fireball() -> void:
+	spell = load(spells["fireball"])
+
+func _on_sparkle() -> void:
+	spell = load(spells["sparkle"])
 
 var MOUSE_SENSITIVITY: float = 0.003
 
 
-func take_dmg(data):
-	hp -= data.damage
+func take_dmg(damage):
+	hp -= damage
 
 func _input(event: InputEvent) -> void:
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x * MOUSE_SENSITIVITY
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+	spell_choise_menu.fireball.connect(_on_fireball)
+	spell_choise_menu.sparkle.connect(_on_sparkle)
 func cast() -> void:
 	var instance = spell.instantiate()
 	instance.position = pos.global_position
@@ -71,6 +84,7 @@ func active_camera() -> void:
 	var t = clamp(speed_ / dash_speed, 0.0, 1.0)
 	var target_fov = lerp(75.0, 95.0, t)
 	camera_3d.fov = lerp(camera_3d.fov, target_fov, t)
+
 
 func _physics_process(delta: float) -> void:
 	speed(delta)
@@ -104,7 +118,7 @@ func _physics_process(delta: float) -> void:
 		if dash_timer <= 0:
 			is_dashing = false
 
-	if Input.is_action_just_pressed('m1') and mana_pool > 0:
+	if Input.is_action_just_pressed('m1') and mana_pool > 0 and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		cast()
 
 	active_camera()

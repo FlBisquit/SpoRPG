@@ -2,13 +2,13 @@ extends CharacterBody3D
 
 var speed = 50
 var damage = 15
-@onready var sparkle_sound: AudioStreamPlayer3D = $"sparkle sound"
+@onready var sound: AudioStreamPlayer3D = $sound
 
 signal hit
 
 func _ready() -> void:
 	velocity = -transform.basis.z * speed
-	sparkle_sound.play()
+	sound.play()
 func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	if is_on_floor(): 

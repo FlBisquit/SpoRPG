@@ -2,11 +2,24 @@
 
 [ext_resource type="Script" uid="uid://bmh2tqqutsp1e" path="res://sparkle.gd" id="1_mfiqw"]
 [ext_resource type="AudioStream" uid="uid://b7lb6ellua2xa" path="res://sounds/eletricity.mp3" id="2_rgpt6"]
+[ext_resource type="Texture2D" uid="uid://yovab4rub4fj" path="res://images/textures/effects/trace_05.png" id="3_xm8tp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rgpt6"]
 height = 1.861084
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_xm8tp"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cmjiv"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xm8tp"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.5137255, 1, 1, 1)
+albedo_texture = ExtResource("3_xm8tp")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_kb4tb"]
+material = SubResource("StandardMaterial3D_xm8tp")
 
 [node name="sparkle" type="CharacterBody3D" unique_id=374135702]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
@@ -16,18 +29,23 @@ script = ExtResource("1_mfiqw")
 transform = Transform3D(0.3, 0, 0, 0, -1.3113417e-08, -0.3, 0, 0.3, -1.3113417e-08, 0, -1.2528604e-09, 0.028662106)
 shape = SubResource("CapsuleShape3D_rgpt6")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=488357784]
-transform = Transform3D(0.3, 0, 0, 0, -1.3113417e-08, -0.3, 0, 0.3, -1.3113417e-08, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_xm8tp")
-
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=344923033]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2357566)
 spot_range = 2.0
 spot_angle = 32.261368
 
-[node name="sparkle sound" type="AudioStreamPlayer3D" parent="." unique_id=1128219775]
+[node name="sound" type="AudioStreamPlayer3D" parent="." unique_id=1128219775]
 stream = ExtResource("2_rgpt6")
 volume_db = -2.0
 pitch_scale = 2.53
 max_distance = 60.0
 max_polyphony = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1150009318]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+amount = 5
+lifetime = 3.0
+local_coords = true
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_cmjiv")
+draw_pass_1 = SubResource("RibbonTrailMesh_kb4tb")

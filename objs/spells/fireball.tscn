@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cnpfn5kxdd5ip"]
+
+[ext_resource type="Script" uid="uid://bs8do86k06tmc" path="res://fireball.gd" id="1_nwvaw"]
+[ext_resource type="AudioStream" uid="uid://byeqi2ob2fqyk" path="res://sounds/fire.mp3" id="2_x2skm"]
+[ext_resource type="Texture2D" uid="uid://bm8xa2tlqrci6" path="res://images/textures/effects/fire_01.png" id="3_wcya0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2bvqg"]
+radius = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xiiud"]
+radius = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlpwj"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 0.41568628, 0, 1)
+albedo_texture = ExtResource("3_wcya0")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_db2bv"]
+material = SubResource("StandardMaterial3D_mlpwj")
+
+[node name="fireball" type="CharacterBody3D" unique_id=236805331]
+script = ExtResource("1_nwvaw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1969070764]
+transform = Transform3D(0.3, 0, 0, 0, 0.2999105, -0.007329669, 0, 0.007329669, 0.2999105, 0, -1.2528604e-09, 0.028662106)
+shape = SubResource("SphereShape3D_2bvqg")
+
+[node name="sound" type="AudioStreamPlayer3D" parent="." unique_id=316878383]
+transform = Transform3D(1, 0, 0, 0, 0.024432182, 0.9997015, 0, -0.9997015, 0.024432182, 0, 0, 0)
+stream = ExtResource("2_x2skm")
+volume_db = 4.0
+pitch_scale = 2.53
+max_distance = 60.0
+max_polyphony = 2
+
+[node name="explosionArea" type="Area3D" parent="." unique_id=248989441]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="explosionArea" unique_id=721640982]
+shape = SubResource("SphereShape3D_xiiud")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1060264353]
+local_coords = true
+draw_pass_1 = SubResource("RibbonTrailMesh_db2bv")
