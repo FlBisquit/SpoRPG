@@ -8,7 +8,7 @@
 radius = 0.8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xiiud"]
-radius = 0.7
+radius = 3.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlpwj"]
 transparency = 1
