@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 var mana_pool = 200
 var max_mana = 200
 
@@ -9,6 +10,8 @@ var double_jump = true
 var max_speed = 7.0
 var accelaration = 0.1
 
+var hp = 100
+var max_hp = 100
 
 var dash_speed = 20.0
 var dash_time = 0.15
@@ -20,10 +23,16 @@ var friction = 20.0
 
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera_3d: Camera3D = $CameraPivot/Camera3D
-var spell = load("res://objs/spells/sparkle.tscn")
 @onready var pos = $stuff/cast_pos
+@onready var hitmarker: AudioStreamPlayer3D = $hitmarker
+
+var spell = load("res://objs/spells/sparkle.tscn")
 
 var MOUSE_SENSITIVITY: float = 0.003
+
+
+func take_dmg(data):
+	hp -= data.damage
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -37,6 +46,7 @@ func cast() -> void:
 	instance.position = pos.global_position
 	instance.transform.basis = pos.global_transform.basis
 	instance.scale = Vector3.ONE
+	#instance.hit.connect(hitmarker.play)
 	get_parent().add_child(instance)
 
 func dash():

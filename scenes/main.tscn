@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://3hxlnjvdwm34" path="res://scenes/cameraSpringarm.gd" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://d1e7kw1s8hyjh" path="res://images/interface/crosshair.png" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://wkk8blupgri" path="res://scenes/stuff.gd" id="4_jyhfs"]
+[ext_resource type="AudioStream" uid="uid://ciqh7ml3g67y5" path="res://sounds/hit-marker.mp3" id="5_o6xl0"]
+[ext_resource type="Script" uid="uid://dlkv08ovdrqck" path="res://scenes/test_target.gd" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://cmt64gughk88d" path="res://images/misc/shromcat.jpg" id="6_tefeu"]
 
 [sub_resource type="Environment" id="Environment_0wfyh"]
 
@@ -21,6 +24,13 @@ material = SubResource("StandardMaterial3D_jyhfs")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbgi4"]
 albedo_color = Color(0.2628975, 0.16511759, 0.09841924, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
+albedo_texture = ExtResource("6_tefeu")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tipki"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_85g3d"]
 
 [node name="Main" type="Node3D" unique_id=1047446959]
 
@@ -74,7 +84,7 @@ anchor_bottom = 0.5
 offset_left = -43.0
 offset_top = -133.0
 offset_right = 85.0
-offset_bottom = -5.0
+offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -95,6 +105,10 @@ script = ExtResource("4_jyhfs")
 
 [node name="cast_pos" type="Node3D" parent="Player/stuff" unique_id=593999385]
 transform = Transform3D(0.9966316, -0.07486114, 0.03349235, 0.0077346554, 0.4923628, 0.8703561, -0.08164622, -0.86716473, 0.4912835, 0.124595165, 0.4551767, 0.008198658)
+
+[node name="hitmarker" type="AudioStreamPlayer3D" parent="Player" unique_id=211811303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23045516, -5)
+stream = ExtResource("5_o6xl0")
 
 [node name="Environmet" type="Node3D" parent="." unique_id=1446119933]
 
@@ -118,3 +132,17 @@ size = Vector3(1.3105469, 2.355957, 0.97802734)
 transform = Transform3D(3.7700434, -0.2526656, -0.23641567, 1.0021276, 0.96214586, 0.39751995, 0.11387182, -0.10215373, 4.3288302, -12.813572, -1.8905609, -20.768345)
 use_collision = true
 size = Vector3(1.3105469, 8.078857, 0.97802734)
+
+[node name="test_target" type="StaticBody3D" parent="." unique_id=1690569225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
+script = ExtResource("5_tbgi4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="test_target" unique_id=610527555]
+material_override = SubResource("StandardMaterial3D_o6xl0")
+mesh = SubResource("CapsuleMesh_tipki")
+
+[node name="hp_bar" type="Label3D" parent="test_target" unique_id=1082790761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="test_target" unique_id=290971229]
+shape = SubResource("CapsuleShape3D_85g3d")
