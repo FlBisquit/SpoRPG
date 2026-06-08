@@ -5,7 +5,7 @@ signal sparkle
 func _ready() -> void:
 	self.visible = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("spell_menu") and self.visible == false:
 		self.visible = true
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

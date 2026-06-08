@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://c6r64fyfwet8t"]
+
+[ext_resource type="Script" uid="uid://bo6xol2h3rvc6" path="res://mineshroom.gd" id="1_eaqdv"]
+[ext_resource type="AudioStream" uid="uid://byeqi2ob2fqyk" path="res://sounds/fire.mp3" id="2_552bx"]
+[ext_resource type="Texture2D" uid="uid://b36ox7d8jbedc" path="res://images/misc/black-spots-texture-background-on-white-background-vector.jpg" id="3_4rxwy"]
+[ext_resource type="Texture2D" uid="uid://cllb3kfsjnvrm" path="res://images/misc/178083694668070506.jpg" id="4_gxvu7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3qsap"]
+radius = 3.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p2pnn"]
+albedo_color = Color(0.5145984, 0.10999898, 0, 1)
+albedo_texture = ExtResource("3_4rxwy")
+emission_enabled = true
+emission = Color(0.4291912, 0.17697519, 0.043653674, 1)
+emission_energy_multiplier = 4.35
+emission_texture = ExtResource("4_gxvu7")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cjw3q"]
+material = SubResource("StandardMaterial3D_p2pnn")
+top_radius = 0.005
+height = 2.01
+radial_segments = 222
+rings = 25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyetl"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v8bix"]
+material = SubResource("StandardMaterial3D_hyetl")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eaqdv"]
+radius = 0.3
+
+[node name="mineshroom" type="Area3D" unique_id=690393837]
+script = ExtResource("1_eaqdv")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1294504891]
+shape = SubResource("SphereShape3D_3qsap")
+
+[node name="sound" type="AudioStreamPlayer3D" parent="." unique_id=462253387]
+transform = Transform3D(1, 0, 0, 0, 0.024432182, 0.9997015, 0, -0.9997015, 0.024432182, 0, 0, 0)
+stream = ExtResource("2_552bx")
+volume_db = 4.0
+pitch_scale = 2.53
+max_distance = 60.0
+max_polyphony = 2
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2032142734]
+transform = Transform3D(0.6, 0, 0, 0, 0.061599996, 0, 0, 0, 0.6, 0, 0.12711999, 0)
+mesh = SubResource("CylinderMesh_cjw3q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1643223451]
+transform = Transform3D(0.2, 0, 0, 0, 0.11, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("CylinderMesh_v8bix")
+
+[node name="explosionArea" type="Area3D" parent="." unique_id=1263858599]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="explosionArea" unique_id=1210071008]
+shape = SubResource("SphereShape3D_eaqdv")
+
+[connection signal="body_entered" from="explosionArea" to="." method="_on_area_3d_body_entered"]

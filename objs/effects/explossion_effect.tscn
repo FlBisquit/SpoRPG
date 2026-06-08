@@ -150,3 +150,4 @@ draw_pass_1 = SubResource("CylinderMesh_l80kx")
 [node name="ExplosionSound" type="AudioStreamPlayer3D" parent="." unique_id=219736103]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20000002, -0.1, -0.1)
 stream = ExtResource("2_l80kx")
+volume_db = -10.0
