@@ -1,6 +1,8 @@
 class_name BaseProjectile
 extends CharacterBody3D
 
+var caster = null
+var mana_cost = 15
 var speed = 50
 var damage = 10
 var lifetime = 2.0

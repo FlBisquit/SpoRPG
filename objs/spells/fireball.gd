@@ -1,21 +1,22 @@
-extends Area3D
-
-var damage = 10
-var lifetime = 10
-var current_lifetime = 0.0
+extends BaseProjectile
+@onready var sound: AudioStreamPlayer3D = $sound
 var hit_effect = load("res://objs/effects/explossion_effect.tscn")
 
+func on_ready() -> void:
+	sound.play()
+	speed = 35
+	damage = 50
+	
 
-func _physics_process(delta: float) -> void:
-	current_lifetime += delta
-	if current_lifetime >= lifetime:
-		queue_free()
+func before_move(delta: float) -> void:
+	velocity += get_gravity() * 1.5 * delta
 
-func _on_area_3d_body_entered() -> void:
+func on_hit(_collision) -> void:
 	var instance = hit_effect.instantiate()
 	get_parent().add_child(instance)
 	instance.global_transform = global_transform
 	instance.explode()
+
 	for body in $explosionArea.get_overlapping_bodies():
 		if body.has_method("take_dmg"):
 			var ray = PhysicsRayQueryParameters3D.create(global_position, body.global_position)
@@ -23,3 +24,4 @@ func _on_area_3d_body_entered() -> void:
 			var result = get_world_3d().direct_space_state.intersect_ray(ray)
 			if result.get("collider") == body:
 				body.take_dmg(damage)
+	hit.emit()

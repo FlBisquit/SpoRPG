@@ -1,8 +1,9 @@
 extends CharacterBody3D
 
-
-var mana_pool = 200
+var cooldowns: Dictionary = {}
+var current_mana = 200
 var max_mana = 200
+var mana_regen = 5.0
 
 const JUMP_VELOCITY = 6.0
 var double_jump = true
@@ -25,6 +26,9 @@ var friction = 20.0
 @onready var camera_3d: Camera3D = $CameraPivot/Camera3D
 @onready var pos = $stuff/cast_pos
 @onready var hitmarker: AudioStreamPlayer3D = $hitmarker
+@onready var mana_counter: Label = $CanvasLayer/powersInterface/mana_counter
+
+
 
 var spells = {"fireball": "res://objs/spells/fireball.tscn",
 	"sparkle":"res://objs/spells/sparkle.tscn"
@@ -54,11 +58,19 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	spell_choise_menu.fireball.connect(_on_fireball)
 	spell_choise_menu.sparkle.connect(_on_sparkle)
+	
 func cast() -> void:
 	var instance = spell.instantiate()
+	var cost =  instance.mana_cost
+	if current_mana < cost:
+		instance.free()
+		return
+	current_mana -= cost
 	instance.position = pos.global_position
+	instance.caster = self
 	instance.transform.basis = pos.global_transform.basis
 	instance.scale = Vector3.ONE
+	
 	#instance.hit.connect(hitmarker.play)
 	get_parent().add_child(instance)
 
@@ -85,16 +97,7 @@ func active_camera() -> void:
 	var target_fov = lerp(75.0, 95.0, t)
 	camera_3d.fov = lerp(camera_3d.fov, target_fov, t)
 
-
-func _physics_process(delta: float) -> void:
-	speed(delta)
-	dash()
-
-	if is_on_floor():
-		double_jump = true
-	if not is_on_floor():
-		velocity += 1.9 * get_gravity() * delta
-
+func halndle_movement(delta: float) ->void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
 
@@ -104,13 +107,28 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, max_speed)
 		velocity.z = move_toward(velocity.z, 0.0, max_speed)
-
+func handle_jump() -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	elif Input.is_action_just_pressed("jump") and not is_on_floor() and double_jump:
 		double_jump = false
 		velocity.y = JUMP_VELOCITY
 
+
+func _physics_process(delta: float) -> void:
+	speed(delta)
+	dash()
+	current_mana = min(current_mana + mana_regen * delta, max_mana)
+	mana_counter.text = str(int(current_mana))
+	for key in cooldowns:
+		cooldowns[key] = max(0.0, cooldowns[key] - delta)
+	if is_on_floor():
+		double_jump = true
+	if not is_on_floor():
+		velocity += 1.9 * get_gravity() * delta
+	halndle_movement(delta)
+	handle_jump()
+	
 	if is_dashing:
 		velocity.x = dash_direction.x * dash_speed
 		velocity.z = dash_direction.z * dash_speed
@@ -118,7 +136,7 @@ func _physics_process(delta: float) -> void:
 		if dash_timer <= 0:
 			is_dashing = false
 
-	if Input.is_action_just_pressed('m1') and mana_pool > 0 and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	if Input.is_action_just_pressed('m1') and current_mana > 0 and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		cast()
 
 	active_camera()

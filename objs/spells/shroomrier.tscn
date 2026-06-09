@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dgxk1ymxflodf"]
+
+[ext_resource type="Script" uid="uid://cmqkveutblpsx" path="res://objs/spells/shroomrier.gd" id="1_dow1b"]
+[ext_resource type="Texture2D" uid="uid://cwpvap86tfmdc" path="res://images/misc/0308f996fb4710c18f5915a638db8365.jpg" id="2_vbw0u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jg802"]
+albedo_texture = ExtResource("2_vbw0u")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6s1i5"]
+material = SubResource("StandardMaterial3D_jg802")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hkbbi"]
+
+[node name="shroomrier" type="CharacterBody3D" unique_id=2087523838]
+script = ExtResource("1_dow1b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2102630412]
+mesh = SubResource("BoxMesh_6s1i5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1436836252]
+shape = SubResource("BoxShape3D_hkbbi")

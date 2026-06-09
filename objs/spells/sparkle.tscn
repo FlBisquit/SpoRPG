@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dgmvwy745itus"]
 
-[ext_resource type="Script" uid="uid://bmh2tqqutsp1e" path="res://sparkle.gd" id="1_mfiqw"]
+[ext_resource type="Script" uid="uid://bmh2tqqutsp1e" path="res://objs/spells/sparkle.gd" id="1_mfiqw"]
 [ext_resource type="AudioStream" uid="uid://b7lb6ellua2xa" path="res://sounds/eletricity.mp3" id="2_rgpt6"]
 [ext_resource type="Texture2D" uid="uid://yovab4rub4fj" path="res://images/textures/effects/trace_05.png" id="3_xm8tp"]
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c6r64fyfwet8t"]
 
-[ext_resource type="Script" uid="uid://bo6xol2h3rvc6" path="res://mineshroom.gd" id="1_eaqdv"]
+[ext_resource type="Script" uid="uid://bo6xol2h3rvc6" path="res://objs/spells/mineshroom.gd" id="1_eaqdv"]
 [ext_resource type="AudioStream" uid="uid://byeqi2ob2fqyk" path="res://sounds/fire.mp3" id="2_552bx"]
 [ext_resource type="Texture2D" uid="uid://b36ox7d8jbedc" path="res://images/misc/black-spots-texture-background-on-white-background-vector.jpg" id="3_4rxwy"]
 [ext_resource type="Texture2D" uid="uid://cllb3kfsjnvrm" path="res://images/misc/178083694668070506.jpg" id="4_gxvu7"]
@@ -60,4 +60,6 @@ mesh = SubResource("CylinderMesh_v8bix")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="explosionArea" unique_id=1210071008]
 shape = SubResource("SphereShape3D_eaqdv")
 
+[connection signal="area_entered" from="explosionArea" to="." method="_on_explosion_area_area_entered"]
 [connection signal="body_entered" from="explosionArea" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="explosionArea" to="." method="_on_explosion_area_body_entered"]

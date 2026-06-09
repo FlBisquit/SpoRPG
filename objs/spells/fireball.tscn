@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cnpfn5kxdd5ip"]
 
-[ext_resource type="Script" uid="uid://bs8do86k06tmc" path="res://fireball.gd" id="1_nwvaw"]
+[ext_resource type="Script" uid="uid://bs8do86k06tmc" path="res://objs/spells/fireball.gd" id="1_nwvaw"]
 [ext_resource type="AudioStream" uid="uid://byeqi2ob2fqyk" path="res://sounds/fire.mp3" id="2_x2skm"]
 [ext_resource type="Texture2D" uid="uid://bm8xa2tlqrci6" path="res://images/textures/effects/fire_01.png" id="3_wcya0"]
 
