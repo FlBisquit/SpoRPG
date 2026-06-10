@@ -1,8 +1,9 @@
-extends BaseProjectile
+extends BaseSpell
 
 @onready var sound: AudioStreamPlayer3D = $sound
-
-func on_ready() -> void:
-	sound.play()
+func _init() -> void:
 	speed = 50
 	damage = 15
+func on_ready() -> void:
+	sound.play()
+	

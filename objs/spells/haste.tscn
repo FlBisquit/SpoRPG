@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bt4wuerc3xwlm"]
+
+[ext_resource type="Script" uid="uid://4wb55k17yita" path="res://objs/spells/haste_spell.gd" id="1_nejd4"]
+
+[node name="haste" type="Node3D" unique_id=1600486432]
+script = ExtResource("1_nejd4")

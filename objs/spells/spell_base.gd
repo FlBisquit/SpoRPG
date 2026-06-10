@@ -1,8 +1,11 @@
-class_name BaseProjectile
+class_name BaseSpell
 extends CharacterBody3D
 
 var caster = null
 var mana_cost = 15
+var is_projectile = true
+
+# для снарядов
 var speed = 50
 var damage = 10
 var lifetime = 2.0
@@ -10,13 +13,16 @@ var current_lifetime = 0.0
 signal hit
 
 func _ready() -> void:
-	velocity = -transform.basis.z * speed
+	if is_projectile:
+		velocity = -transform.basis.z * speed
 	on_ready()
 
 func on_ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
+	if not is_projectile:
+		return
 	current_lifetime += delta
 	if current_lifetime >= lifetime:
 		queue_free()
@@ -36,3 +42,11 @@ func on_hit(collision) -> void:
 		if body.has_method("take_dmg"):
 			body.take_dmg(damage)
 			hit.emit()
+
+func activate(who) -> void:
+	caster = who
+	on_activate()
+	queue_free()
+
+func on_activate() -> void:
+	pass

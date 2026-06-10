@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+var max_stamina = 2
+var current_stamina = 2
+var stamina_regen = 0.5
+
 var cooldowns: Dictionary = {}
 var current_mana = 200
 var max_mana = 200
@@ -27,14 +31,18 @@ var friction = 20.0
 @onready var pos = $stuff/cast_pos
 @onready var hitmarker: AudioStreamPlayer3D = $hitmarker
 @onready var mana_counter: Label = $CanvasLayer/powersInterface/mana_counter
+@onready var stamina_counter: Label = $CanvasLayer/powersInterface/stamina_counter
 
 
-
+var equipped_spells: Array = ['fireball','sparkle','haste']
 var spells = {"fireball": "res://objs/spells/fireball.tscn",
-	"sparkle":"res://objs/spells/sparkle.tscn"
+	"sparkle":"res://objs/spells/sparkle.tscn",
+	"haste": "res://objs/spells/haste.tscn"
 }
 
-var spell = load(spells["fireball"])
+var buffs: Dictionary = {}
+
+var spell = load(spells["haste"])
 
 func _on_fireball() -> void:
 	spell = load(spells["fireball"])
@@ -61,21 +69,24 @@ func _ready() -> void:
 	
 func cast() -> void:
 	var instance = spell.instantiate()
-	var cost =  instance.mana_cost
+	var cost = instance.mana_cost
 	if current_mana < cost:
 		instance.free()
 		return
 	current_mana -= cost
-	instance.position = pos.global_position
 	instance.caster = self
-	instance.transform.basis = pos.global_transform.basis
-	instance.scale = Vector3.ONE
-	
-	#instance.hit.connect(hitmarker.play)
-	get_parent().add_child(instance)
+	if instance.is_projectile:
+		instance.position = pos.global_position
+		instance.transform.basis = pos.global_transform.basis
+		instance.scale = Vector3.ONE
+		get_parent().add_child(instance)
+	else:
+		print('buff')
+		instance.activate(self)
 
 func dash():
-	if Input.is_action_just_pressed("dash") and !is_dashing:
+	if Input.is_action_just_pressed("dash") and !is_dashing and current_stamina>0:
+		current_stamina-=1
 		is_dashing = true
 		dash_timer = dash_time
 		var input_dir := Input.get_vector("left", "right", "forward", "backward")
@@ -92,18 +103,20 @@ func speed(delta: float) -> void:
 		velocity.z = xz_velocity.y
 
 func active_camera() -> void:
+	var speed_mod = buffs.get('speed', 1.0)
 	var speed_ = velocity.length()
 	var t = clamp(speed_ / dash_speed, 0.0, 1.0)
 	var target_fov = lerp(75.0, 95.0, t)
 	camera_3d.fov = lerp(camera_3d.fov, target_fov, t)
 
-func halndle_movement(delta: float) ->void:
+func handle_movement(delta: float) -> void:
+	var speed_mod = buffs.get("speed", 1.0)
+	print("speed_mod: ", speed_mod)
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
-
 	if direction:
-		velocity.x = move_toward(velocity.x, direction.x * max_speed, accelaration * 2)
-		velocity.z = move_toward(velocity.z, direction.z * max_speed, accelaration * 2)
+		velocity.x = move_toward(velocity.x, direction.x * max_speed * speed_mod, accelaration * 2 * speed_mod)
+		velocity.z = move_toward(velocity.z, direction.z * max_speed * speed_mod, accelaration * 2 * speed_mod)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, max_speed)
 		velocity.z = move_toward(velocity.z, 0.0, max_speed)
@@ -113,20 +126,29 @@ func handle_jump() -> void:
 	elif Input.is_action_just_pressed("jump") and not is_on_floor() and double_jump:
 		double_jump = false
 		velocity.y = JUMP_VELOCITY
-
+func apply_buff(stat: String, multiplier: float, duration: float) -> void:
+	print("applying buff: ", stat, " x", multiplier, " for ", duration, "s")
+	buffs[stat] = multiplier
+	await get_tree().create_timer(duration).timeout
+	buffs.erase(stat)
 
 func _physics_process(delta: float) -> void:
 	speed(delta)
 	dash()
 	current_mana = min(current_mana + mana_regen * delta, max_mana)
 	mana_counter.text = str(int(current_mana))
+	
+	current_stamina = min(current_stamina + stamina_regen * delta, max_stamina)
+	stamina_counter.text = str(int(current_stamina))
+	
+
 	for key in cooldowns:
 		cooldowns[key] = max(0.0, cooldowns[key] - delta)
 	if is_on_floor():
 		double_jump = true
 	if not is_on_floor():
 		velocity += 1.9 * get_gravity() * delta
-	halndle_movement(delta)
+	handle_movement(delta)
 	handle_jump()
 	
 	if is_dashing:

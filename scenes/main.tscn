@@ -26,6 +26,10 @@ material = SubResource("StandardMaterial3D_jyhfs")
 font_size = 61
 font_color = Color(0, 1, 1, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_choun"]
+font_size = 61
+font_color = Color(0.1882353, 1, 0.05490196, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_sugp2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbgi4"]
@@ -116,6 +120,15 @@ offset_right = 295.0
 offset_bottom = 1008.0
 text = "MANA"
 label_settings = SubResource("LabelSettings_85g3d")
+
+[node name="stamina_counter" type="Label" parent="Player/CanvasLayer/powersInterface" unique_id=1744068781]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 836.0
+offset_right = 386.0
+offset_bottom = 920.0
+text = "STAMINA"
+label_settings = SubResource("LabelSettings_choun")
 
 [node name="CameraPivot" type="SpringArm3D" parent="Player" unique_id=1772277302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.333265, 1.3413253, 0)

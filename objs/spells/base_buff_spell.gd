@@ -1,13 +1,13 @@
 class_name BaseBuffSpell
-extends Node
+extends Node3D
 
 var mana_cost = 20
 var caster = null
+var is_projectile = false
 
-func activate(who) ->void:
+func activate(who) -> void:
 	caster = who
-	apply_buff()
+	on_activate()
 
-func apply_buff() -> void:
+func on_activate() -> void:
 	pass
-	

@@ -1,11 +1,13 @@
-extends BaseProjectile
+extends BaseSpell
 @onready var sound: AudioStreamPlayer3D = $sound
 var hit_effect = load("res://objs/effects/explossion_effect.tscn")
-
-func on_ready() -> void:
-	sound.play()
+func _init() -> void:
+	mana_cost = 65
 	speed = 35
 	damage = 50
+func on_ready() -> void:
+	sound.play()
+
 	
 
 func before_move(delta: float) -> void:
