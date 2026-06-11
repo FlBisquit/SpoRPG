@@ -34,21 +34,29 @@ var friction = 20.0
 @onready var stamina_counter: Label = $CanvasLayer/powersInterface/stamina_counter
 
 
-var equipped_spells: Array = ['fireball','sparkle','haste']
+var equipped_spells: Array = ['fireball','sparkle',]
 var spells = {"fireball": "res://objs/spells/fireball.tscn",
 	"sparkle":"res://objs/spells/sparkle.tscn",
 	"haste": "res://objs/spells/haste.tscn"
 }
 
 var buffs: Dictionary = {}
-
-var spell = load(spells["haste"])
+var current_spell_name = "haste"
+var current_spell = load(spells["haste"])
 
 func _on_fireball() -> void:
-	spell = load(spells["fireball"])
+	current_spell = load(spells["fireball"])
+	current_spell_name = "fireball"
 
 func _on_sparkle() -> void:
-	spell = load(spells["sparkle"])
+	current_spell = load(spells["sparkle"])
+	current_spell_name = "sparkle"
+
+
+func _on_haste() -> void:
+	current_spell = load(spells["haste"])
+	current_spell_name = "haste"
+
 
 var MOUSE_SENSITIVITY: float = 0.003
 
@@ -62,19 +70,26 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x * MOUSE_SENSITIVITY
 
-func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	spell_choise_menu.fireball.connect(_on_fireball)
-	spell_choise_menu.sparkle.connect(_on_sparkle)
-	
+#func _ready() -> void:
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	#spell_choise_menu.fireball.connect(_on_fireball)
+	#spell_choise_menu.sparkle.connect(_on_sparkle)
+	#spell_choise_menu.haste.connect(_on_haste)
+	#
 func cast() -> void:
-	var instance = spell.instantiate()
+	if cooldowns.get(current_spell_name, 0.0) >  0:
+		return
+	if current_spell_name not in equipped_spells:
+		return
+	var instance = current_spell.instantiate()
+	current_spell
 	var cost = instance.mana_cost
 	if current_mana < cost:
 		instance.free()
 		return
 	current_mana -= cost
 	instance.caster = self
+	cooldowns[current_spell_name] = instance.cooldown
 	if instance.is_projectile:
 		instance.position = pos.global_position
 		instance.transform.basis = pos.global_transform.basis
@@ -83,6 +98,7 @@ func cast() -> void:
 	else:
 		print('buff')
 		instance.activate(self)
+		instance.free()
 
 func dash():
 	if Input.is_action_just_pressed("dash") and !is_dashing and current_stamina>=1:
@@ -94,6 +110,14 @@ func dash():
 		if direction == Vector3.ZERO:
 			direction = -transform.basis.z
 		dash_direction = direction
+
+func show_spell_choice_menu() -> void:
+		if Input.is_action_just_pressed("spell_menu") and $CanvasLayer/SpellChoiseMenu.visible == false:
+			$CanvasLayer/SpellChoiseMenu.visible = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		elif Input.is_action_just_pressed("spell_menu") and $CanvasLayer/SpellChoiseMenu.visible == true: 
+			$CanvasLayer/SpellChoiseMenu.visible = false
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func speed(delta: float) -> void:
 	var xz_velocity = Vector2(velocity.x, velocity.z)
@@ -111,7 +135,6 @@ func active_camera() -> void:
 
 func handle_movement(delta: float) -> void:
 	var speed_mod = buffs.get("speed", 1.0)
-	print("speed_mod: ", speed_mod)
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
 	if direction:
@@ -132,9 +155,16 @@ func apply_buff(stat: String, multiplier: float, duration: float) -> void:
 	await get_tree().create_timer(duration).timeout
 	buffs.erase(stat)
 
+
 func _physics_process(delta: float) -> void:
+	if current_spell_name not in equipped_spells:
+		current_spell = load(spells[(equipped_spells[0])])
+		current_spell_name = equipped_spells[0]
+		print(current_spell)
+		print(current_spell_name)
 	speed(delta)
 	dash()
+	show_spell_choice_menu()
 	current_mana = min(current_mana + mana_regen * delta, max_mana)
 	mana_counter.text = str(int(current_mana))
 	

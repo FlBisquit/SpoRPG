@@ -5,6 +5,8 @@ func _init() -> void:
 	mana_cost = 65
 	speed = 35
 	damage = 50
+	cooldown = 5.0
+	spell_name = 'fireball'
 func on_ready() -> void:
 	sound.play()
 

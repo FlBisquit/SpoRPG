@@ -2,16 +2,16 @@ class_name BaseSpell
 extends CharacterBody3D
 
 var caster = null
+var spell_name: String = ""
 var mana_cost = 15
 var is_projectile = true
 
-# для снарядов
 var speed = 50
 var damage = 10
 var lifetime = 2.0
 var current_lifetime = 0.0
 signal hit
-
+var cooldown = 1.5
 func _ready() -> void:
 	if is_projectile:
 		velocity = -transform.basis.z * speed
