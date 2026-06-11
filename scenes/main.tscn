@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c6r64fyfwet8t" path="res://objs/spells/mineshroom.tscn" id="9_85g3d"]
 
 [sub_resource type="Environment" id="Environment_0wfyh"]
+background_mode = 1
+background_color = Color(0.7033262, 0.80218047, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
 albedo_color = Color(0.5058824, 0.7764706, 0.3764706, 1)
@@ -202,4 +204,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 shape = SubResource("CapsuleShape3D_85g3d")
 
 [node name="mineshroom" parent="." unique_id=2075734359 instance=ExtResource("9_85g3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6000004, 1.5000001, -5.3999996)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.200001, 1.5000001, -5.3999996)

@@ -85,7 +85,7 @@ func cast() -> void:
 		instance.activate(self)
 
 func dash():
-	if Input.is_action_just_pressed("dash") and !is_dashing and current_stamina>0:
+	if Input.is_action_just_pressed("dash") and !is_dashing and current_stamina>=1:
 		current_stamina-=1
 		is_dashing = true
 		dash_timer = dash_time
