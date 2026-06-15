@@ -26,6 +26,8 @@ var dash_direction = Vector3.ZERO
 var friction = 20.0
 
 @onready var spell_choise_menu: Control = $CanvasLayer/SpellChoiseMenu
+@onready var inventory: Control = $CanvasLayer/Inventory
+
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera_3d: Camera3D = $CameraPivot/Camera3D
 @onready var pos = $stuff/cast_pos
@@ -111,6 +113,14 @@ func dash():
 			direction = -transform.basis.z
 		dash_direction = direction
 
+func show_inventory() -> void:
+	if Input.is_action_just_pressed("inventory") and inventory.visible == false:
+		inventory.visible = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	elif Input.is_action_just_pressed("inventory") and inventory.visible == true:
+		inventory.visible = false
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 func show_spell_choice_menu() -> void:
 		if Input.is_action_just_pressed("spell_menu") and $CanvasLayer/SpellChoiseMenu.visible == false:
 			$CanvasLayer/SpellChoiseMenu.visible = true
@@ -164,6 +174,7 @@ func _physics_process(delta: float) -> void:
 		print(current_spell_name)
 	speed(delta)
 	dash()
+	show_inventory()
 	show_spell_choice_menu()
 	current_mana = min(current_mana + mana_regen * delta, max_mana)
 	mana_counter.text = str(int(current_mana))

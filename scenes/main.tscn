@@ -2,17 +2,29 @@
 
 [ext_resource type="Script" uid="uid://dwj8uye3wk73j" path="res://scripts/player.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://cuob8b0mvytt" path="res://scenes/spell_choise_menu.tscn" id="2_tipki"]
+[ext_resource type="PackedScene" uid="uid://cq2c4p1j82v7u" path="res://objs/items/Item Scenes/hampter_item.tscn" id="2_ya4ey"]
 [ext_resource type="Script" uid="uid://3hxlnjvdwm34" path="res://scenes/cameraSpringarm.gd" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://d1e7kw1s8hyjh" path="res://images/interface/crosshair.png" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://clm4q3ioxmxwi" path="res://images/interface/inventory.tscn" id="4_choun"]
 [ext_resource type="Script" uid="uid://wkk8blupgri" path="res://scenes/stuff.gd" id="4_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://ciqh7ml3g67y5" path="res://sounds/hit-marker.mp3" id="5_o6xl0"]
 [ext_resource type="Script" uid="uid://dlkv08ovdrqck" path="res://scenes/test_target.gd" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://cmt64gughk88d" path="res://images/misc/shromcat.jpg" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c6r64fyfwet8t" path="res://objs/spells/mineshroom.tscn" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://b8ssts84vtelp" path="res://objs/map/terrain.glb" id="12_eb6dy"]
 
 [sub_resource type="Environment" id="Environment_0wfyh"]
 background_mode = 1
-background_color = Color(0.7033262, 0.80218047, 1, 1)
+background_color = Color(0.01585739, 0.0681928, 0.124287926, 1)
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.032159306, 0.06970714, 0.09644581, 1)
+fog_density = 1.0
+fog_depth_curve = 1.3107239
+fog_depth_end = 1897.9
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0054
+volumetric_fog_albedo = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
 albedo_color = Color(0.5058824, 0.7764706, 0.3764706, 1)
@@ -52,7 +64,13 @@ albedo_texture = ExtResource("6_tefeu")
 environment = SubResource("Environment_0wfyh")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=1604113188]
-transform = Transform3D(1, 0, 0, 0, 0.019214913, 0.9998154, 0, -0.9998154, 0.019214913, 0, 2.9316835, 0)
+transform = Transform3D(1, 0, 0, 0, -0.03488203, 0.99939144, 0, -0.99939144, -0.03488203, 0, 2.9316835, 0)
+light_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+light_energy = 2.0
+light_volumetric_fog_energy = 2.01
+light_specular = 0.0
+shadow_normal_bias = 0.695
+directional_shadow_split_1 = 0.0
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1706847486]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2304552, 0)
@@ -72,9 +90,16 @@ shape = SubResource("CapsuleShape3D_jyhfs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player" unique_id=1072109504]
 
-[node name="SpellChoiseMenu" parent="Player/CanvasLayer" unique_id=888688480 instance=ExtResource("2_tipki")]
+[node name="HampterItem" parent="Player/CanvasLayer" unique_id=808054537 instance=ExtResource("2_ya4ey")]
+offset_left = 642.0
+offset_top = 602.0
+offset_right = 642.0
+offset_bottom = 602.0
 
-[node name="Control" type="Control" parent="Player/CanvasLayer" unique_id=649781047]
+[node name="SpellChoiseMenu" parent="Player/CanvasLayer" unique_id=888688480 instance=ExtResource("2_tipki")]
+visible = false
+
+[node name="crosshair" type="Control" parent="Player/CanvasLayer" unique_id=649781047]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -89,7 +114,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="Player/CanvasLayer/Control" unique_id=286217253]
+[node name="TextureRect" type="TextureRect" parent="Player/CanvasLayer/crosshair" unique_id=286217253]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -97,9 +122,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -32.0
-offset_top = -66.0
+offset_top = -31.0
 offset_right = 96.0
-offset_bottom = 44.0
+offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -132,6 +157,15 @@ offset_bottom = 920.0
 text = "STAMINA"
 label_settings = SubResource("LabelSettings_choun")
 
+[node name="Inventory" parent="Player/CanvasLayer" unique_id=1113931991 instance=ExtResource("4_choun")]
+visible = false
+
+[node name="HampterItem2" parent="Player/CanvasLayer" unique_id=829544050 instance=ExtResource("2_ya4ey")]
+offset_left = 639.0
+offset_top = 249.0
+offset_right = 639.0
+offset_bottom = 249.0
+
 [node name="CameraPivot" type="SpringArm3D" parent="Player" unique_id=1772277302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.333265, 1.3413253, 0)
 spring_length = 2.0
@@ -155,25 +189,10 @@ stream = ExtResource("5_o6xl0")
 [node name="Environmet" type="Node3D" parent="." unique_id=1446119933]
 
 [node name="Ground" type="CSGBox3D" parent="Environmet" unique_id=1702118327]
-transform = Transform3D(23.408384, 0, 0, 0, 0.50539196, 0, 0, 0, 23.408384, -1.5102777, -0.07880819, -3.5581753)
+transform = Transform3D(23.408384, 0, 0, 0, 0.50539196, 0, 0, 0, 23.408384, -1.4102777, 0.121191815, -3.5581753)
 use_collision = true
 size = Vector3(2.1412048, 0.94055176, 2.7206402)
 material = SubResource("StandardMaterial3D_tbgi4")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Environmet" unique_id=532886152]
-transform = Transform3D(3.9008436, 0.0106599545, -0.12292384, -0.04452309, 0.9995841, -0.11529731, 0.10904621, 0.026794069, 4.3502054, 9.249985, 0.43542325, -24.89077)
-use_collision = true
-size = Vector3(1.3105469, 1, 0.97802734)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Environmet" unique_id=666746471]
-transform = Transform3D(3.9008436, 0.010659955, -0.12292384, -0.030109588, 0.99471146, 0.4458747, 0.11387184, -0.10215375, 4.3288307, 9.242758, 0.3498469, 19.508444)
-use_collision = true
-size = Vector3(1.3105469, 2.355957, 0.97802734)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Environmet" unique_id=495819520]
-transform = Transform3D(3.7700434, -0.2526656, -0.23641567, 1.0021276, 0.96214586, 0.39751995, 0.11387182, -0.10215373, 4.3288302, -12.813572, -1.8905609, -20.768345)
-use_collision = true
-size = Vector3(1.3105469, 8.078857, 0.97802734)
 
 [node name="test_target" type="StaticBody3D" parent="." unique_id=1690569225]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
@@ -194,6 +213,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.0999999, -5.5)
 script = ExtResource("5_tbgi4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="test_target2" unique_id=1078177925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 material_override = SubResource("StandardMaterial3D_o6xl0")
 mesh = SubResource("CapsuleMesh_tipki")
 
@@ -205,3 +225,6 @@ shape = SubResource("CapsuleShape3D_85g3d")
 
 [node name="mineshroom" parent="." unique_id=2075734359 instance=ExtResource("9_85g3d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.200001, 1.5000001, -5.3999996)
+
+[node name="terrain" parent="." unique_id=956092736 instance=ExtResource("12_eb6dy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -211.79999, -44.399982, -238.09987)

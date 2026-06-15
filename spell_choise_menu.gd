@@ -1,4 +1,4 @@
-@tool
+#@tool
 extends Control
 
 const SPRITE_SIZE = Vector2(32,32)

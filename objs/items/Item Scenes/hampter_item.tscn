@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cq2c4p1j82v7u"]
+
+[ext_resource type="Script" uid="uid://iu1ymyfrm85k" path="res://objs/items/Item Scenes/hampter_item.gd" id="1_ghg2a"]
+[ext_resource type="Texture2D" uid="uid://sq5foppm402j" path="res://images/misc/sleepy hampter.jpg" id="2_8tljm"]
+[ext_resource type="Texture2D" uid="uid://de0ajmyaselly" path="res://objs/items/Item Art/autistic hampter.jpg" id="2_shexb"]
+[ext_resource type="Script" uid="uid://dk3fqimud8alc" path="res://objs/items/item_base.gd" id="3_mg24i"]
+
+[sub_resource type="Resource" id="Resource_h0l3r"]
+script = ExtResource("3_mg24i")
+name = "Hampter"
+type = "Spell"
+inv_icon = ExtResource("2_8tljm")
+stack_amnt = 1
+item_path = "res://objs/items/Item Scenes/hampter_item.tscn"
+metadata/_custom_type_script = "uid://dk3fqimud8alc"
+
+[node name="HampterItem" type="Control" unique_id=829544050]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_ghg2a")
+item_res = SubResource("Resource_h0l3r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=644215]
+scale = Vector2(0.25, 0.3)
+texture = ExtResource("2_shexb")
+
+[node name="Button" type="Button" parent="." unique_id=1422757278]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -109.0
+offset_top = -107.0
+offset_right = 110.0
+offset_bottom = 106.0
+mouse_default_cursor_shape = 2
+
+[node name="Timer" type="Timer" parent="." unique_id=1500242776]
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
