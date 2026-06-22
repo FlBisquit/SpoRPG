@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://qv8mob6pxi60"]
+
+[ext_resource type="Shader" uid="uid://rv6w0v8hqaar" path="res://new_shader.gdshader" id="1_to7hn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_afu6u"]
+render_priority = 0
+shader = ExtResource("1_to7hn")
+shader_parameter/out_col = Color(1, 1, 1, 1)
+shader_parameter/amount = 0.8
+shader_parameter/beer_factor = 0.2
+shader_parameter/metallic_val = 0.7
+shader_parameter/roughness_val = 0.3
+shader_parameter/specular_val = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_d8yt1"]
+material = SubResource("ShaderMaterial_afu6u")
+size = Vector2(500, 500)
+subdivide_width = 100
+subdivide_depth = 100
+
+[node name="water" type="Node3D" unique_id=700373435]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=303724950]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -0.0002, 0, 0.0033999998)
+mesh = SubResource("PlaneMesh_d8yt1")

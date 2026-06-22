@@ -1,6 +1,6 @@
-extends SpringArm3D
+extends Node3D
 
-var MOUSE_SENSITIVITY : float = 0.003
+var MOUSE_SENSITIVITY: float = 0.003
 
 func _input(event: InputEvent) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:

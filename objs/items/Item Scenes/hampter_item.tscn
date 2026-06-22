@@ -26,7 +26,8 @@ scale = Vector2(0.25, 0.3)
 texture = ExtResource("2_shexb")
 
 [node name="Button" type="Button" parent="." unique_id=1422757278]
-self_modulate = Color(1, 1, 1, 0)
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = -109.0
 offset_top = -107.0

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bmftmy5phm6n0"]
+
+[ext_resource type="Script" uid="uid://cj4l2o2dvoklu" path="res://book_slot.gd" id="1_35l7m"]
+
+[node name="book_slot" type="Control" unique_id=2095389272]
+layout_mode = 3
+anchor_left = 0.49300003
+anchor_top = -0.008
+anchor_right = 0.536
+anchor_bottom = 0.066
+offset_left = 13.439941
+offset_top = 8.64
+offset_right = -69.119995
+offset_bottom = -71.28
+grow_horizontal = 2
+script = ExtResource("1_35l7m")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=653830649]
+layout_mode = 1
+offset_left = -21.0
+offset_top = -20.0
+offset_right = 79.0
+offset_bottom = 80.0
+color = Color(0.06768207, 0.06439583, 1.2032688e-08, 1)
+
+[node name="itemIcon" type="TextureRect" parent="." unique_id=1066781456]
+layout_mode = 0
+offset_left = -21.0
+offset_top = -20.0
+offset_right = 79.0
+offset_bottom = 80.0
+expand_mode = 2
+
+[node name="Button" type="Button" parent="." unique_id=1238066527]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = -21.0
+offset_top = -20.0
+offset_right = 79.0
+offset_bottom = 80.0
+mouse_default_cursor_shape = 2
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

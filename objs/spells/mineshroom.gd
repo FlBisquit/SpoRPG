@@ -22,5 +22,5 @@ func _on_explosion_area_body_entered(body: Node3D) -> void:
 			ray.exclude = [self]
 			var result = get_world_3d().direct_space_state.intersect_ray(ray)
 			if result.get("collider") == body:
-				body.take_dmg(damage)
+				body.take_dmg(damage, self)
 				queue_free()

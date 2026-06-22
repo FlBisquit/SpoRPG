@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dhmpfnb2jx55v"]
+
+[ext_resource type="PackedScene" uid="uid://b3ae6psrfmfxd" path="res://objs/map/grass.glb" id="1_awyq3"]
+
+[node name="grass2" unique_id=1917730744 instance=ExtResource("1_awyq3")]

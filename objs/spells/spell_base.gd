@@ -2,19 +2,28 @@ class_name BaseSpell
 extends CharacterBody3D
 
 var caster = null
+var caster_name = ""
 var spell_name: String = ""
 var mana_cost = 15
 var is_projectile = true
 
+var gravity_scale: float = 0.0
 var speed = 50
 var damage = 10
 var lifetime = 2.0
 var current_lifetime = 0.0
 signal hit
 var cooldown = 1.5
+var shoot_direction: Vector3 = Vector3.ZERO 
+
+
 func _ready() -> void:
 	if is_projectile:
-		velocity = -transform.basis.z * speed
+		if shoot_direction != Vector3.ZERO:
+			velocity = shoot_direction * speed
+			look_at(global_position + shoot_direction, Vector3.UP)
+		else:
+			velocity = -transform.basis.z * speed
 	on_ready()
 
 func on_ready() -> void:
@@ -40,7 +49,7 @@ func on_hit(collision) -> void:
 	if collision:
 		var body = collision.get_collider()
 		if body.has_method("take_dmg"):
-			body.take_dmg(damage)
+			body.take_dmg(damage, caster)
 			hit.emit()
 
 func activate(who) -> void:

@@ -1,8 +1,15 @@
 [gd_scene format=3 uid="uid://clm4q3ioxmxwi"]
 
 [ext_resource type="Script" uid="uid://dr12yua0s5kmo" path="res://inventory.gd" id="1_ro6sp"]
+[ext_resource type="PackedScene" uid="uid://ds304ksu3jvx3" path="res://armor_slot.tscn" id="2_824re"]
+[ext_resource type="PackedScene" uid="uid://bmftmy5phm6n0" path="res://book_slot.tscn" id="3_o1sxe"]
+[ext_resource type="Script" uid="uid://pxnk1fyjxjbo" path="res://images/interface/powering_view.gd" id="4_x6ay6"]
+[ext_resource type="Script" uid="uid://psph43qb37hh" path="res://scripts/upgrade_button.gd" id="5_4px20"]
 
-[node name="Inventory" type="Control" unique_id=1113931991]
+[sub_resource type="LabelSettings" id="LabelSettings_2ff4s"]
+font_size = 43
+
+[node name="personal_menu" type="Control" unique_id=1113931991]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +19,25 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_ro6sp")
 
-[node name="Container" type="Container" parent="." unique_id=564744014]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=315157045]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 0
+offset_left = 428.0
+offset_top = 297.0
+offset_right = 1434.0
+offset_bottom = 913.0
+color = Color(0.2647012, 0.22188371, 0.22552317, 1)
+
+[node name="inventoryView" type="Control" parent="." unique_id=1185143161]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Container" type="Container" parent="inventoryView" unique_id=2078183537]
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 1
 anchors_preset = 8
@@ -20,9 +45,105 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 20.0
-offset_top = -166.0
-offset_right = 270.0
-offset_bottom = 257.0
+offset_left = 19.0
+offset_top = -168.0
+offset_right = 468.0
+offset_bottom = 418.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="spell_container" type="Container" parent="inventoryView" unique_id=1379446292]
+layout_mode = 1
+offset_left = 223.0
+offset_top = 722.0
+offset_right = 708.0
+offset_bottom = 911.0
+
+[node name="equipment" type="Control" parent="inventoryView" unique_id=1753113273]
+anchors_preset = 0
+offset_left = 434.0
+offset_top = 304.0
+offset_right = 887.0
+offset_bottom = 750.0
+
+[node name="armor_slot" parent="inventoryView/equipment" unique_id=2095389272 instance=ExtResource("2_824re")]
+layout_mode = 1
+offset_left = -25.32904
+offset_top = 198.568
+offset_right = -44.80803
+offset_bottom = 165.564
+
+[node name="book_slot" parent="inventoryView/equipment" unique_id=842009758 instance=ExtResource("3_o1sxe")]
+layout_mode = 1
+offset_left = 108.67099
+offset_top = 198.568
+offset_right = 89.19212
+offset_bottom = 165.564
+
+[node name="powering_view" type="Control" parent="." unique_id=1457980825]
+layout_mode = 1
+anchor_left = 0.61800003
+anchor_top = 0.56
+anchor_right = 0.61800003
+anchor_bottom = 0.56
+offset_left = -245.56006
+offset_top = -307.8
+offset_right = 247.43994
+offset_bottom = 308.2
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_x6ay6")
+
+[node name="accept btn" type="Button" parent="powering_view" unique_id=102135531]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 517.0
+offset_right = 378.0
+offset_bottom = 589.0
+text = "accept"
+
+[node name="skill_point_counter" type="Label" parent="powering_view" unique_id=2012434634]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 51.0
+offset_right = 85.0
+offset_bottom = 110.0
+text = "0"
+label_settings = SubResource("LabelSettings_2ff4s")
+
+[node name="up_list" type="Control" parent="powering_view" unique_id=2052013975]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="stm_up_1" type="Button" parent="powering_view/up_list" unique_id=754026452]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 359.0
+offset_right = 310.0
+offset_bottom = 473.0
+text = "+MAX Stamina"
+script = ExtResource("5_4px20")
+stat = "max_stamina"
+value = 2.0
+cost = 2
+
+[node name="items_btn" type="Button" parent="." unique_id=1528368171]
+self_modulate = Color(0.72370744, 0, 0.27495152, 1)
+layout_mode = 0
+offset_left = 1007.0
+offset_top = 225.0
+offset_right = 1081.0
+offset_bottom = 297.0
+mouse_default_cursor_shape = 2
+
+[node name="level_up_btn" type="Button" parent="." unique_id=1902385355]
+layout_mode = 0
+offset_left = 1117.0
+offset_top = 225.0
+offset_right = 1191.0
+offset_bottom = 297.0
+
+[connection signal="pressed" from="powering_view/accept btn" to="powering_view" method="_on_accept_btn_pressed"]
+[connection signal="pressed" from="items_btn" to="." method="_on_items_btn_pressed"]
+[connection signal="pressed" from="level_up_btn" to="." method="_on_level_up_btn_pressed"]

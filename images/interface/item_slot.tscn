@@ -5,6 +5,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_h6k58"]
 font_color = Color(1, 1, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_8j1os"]
+font_color = Color(0, 1, 1, 1)
+
 [node name="item_slot" type="Control" unique_id=2095389272]
 layout_mode = 3
 anchors_preset = 15
@@ -47,12 +50,19 @@ offset_top = -24.0
 offset_right = 79.0
 offset_bottom = -1.0
 text = "0"
+label_settings = SubResource("LabelSettings_8j1os")
 horizontal_alignment = 2
 
 [node name="Button" type="Button" parent="." unique_id=1238066527]
-self_modulate = Color(1, 1, 1, 0)
+modulate = Color(1, 0, 0, 1)
 layout_mode = 0
 offset_left = -21.0
 offset_top = -20.0
 offset_right = 79.0
 offset_bottom = 80.0
+mouse_default_cursor_shape = 2
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

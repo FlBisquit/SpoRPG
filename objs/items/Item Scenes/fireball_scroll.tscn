@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://c074bd4xswh0c"]
+
+[ext_resource type="Script" uid="uid://b3tvsgb53srvp" path="res://objs/items/Item Scenes/fireball_scroll.gd" id="1_7w7ej"]
+[ext_resource type="PackedScene" uid="uid://bkgrunyqgm3d8" path="res://objs/map/scroll.blend" id="2_ckqyj"]
+[ext_resource type="Texture2D" uid="uid://cwpvap86tfmdc" path="res://images/misc/0308f996fb4710c18f5915a638db8365.jpg" id="2_imje5"]
+[ext_resource type="Script" uid="uid://dk3fqimud8alc" path="res://objs/items/item_base.gd" id="3_30pcj"]
+
+[sub_resource type="Resource" id="Resource_7g3d8"]
+script = ExtResource("3_30pcj")
+name = "fireball_scroll"
+type = "Spell"
+inv_icon = ExtResource("2_imje5")
+stack_amnt = 1
+item_path = "res://objs/items/Item Scenes/fireball_scroll.tscn"
+spell_name = "fireball"
+metadata/_custom_type_script = "uid://dk3fqimud8alc"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2ff4s"]
+
+[node name="fireball_scroll" type="Node3D" unique_id=170032546]
+script = ExtResource("1_7w7ej")
+item_res = SubResource("Resource_7g3d8")
+
+[node name="scroll" parent="." unique_id=1794852776 instance=ExtResource("2_ckqyj")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, 0, 0)
+
+[node name="scroll_area" type="Area3D" parent="." unique_id=284938557]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="scroll_area" unique_id=684148254]
+physics_interpolation_mode = 2
+shape = SubResource("SphereShape3D_2ff4s")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=658048613]
+target_position = Vector3(0, -0.7, 0)
+debug_shape_thickness = 5

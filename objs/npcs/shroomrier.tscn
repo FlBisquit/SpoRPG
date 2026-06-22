@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dgxk1ymxflodf"]
+
+[ext_resource type="Script" uid="uid://cmqkveutblpsx" path="res://objs/npcs/shroomrier.gd" id="1_dow1b"]
+[ext_resource type="Texture2D" uid="uid://cwpvap86tfmdc" path="res://images/misc/0308f996fb4710c18f5915a638db8365.jpg" id="2_vbw0u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jg802"]
+albedo_texture = ExtResource("2_vbw0u")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6s1i5"]
+material = SubResource("StandardMaterial3D_jg802")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hkbbi"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dgve3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgve3"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dgve3"]
+material = SubResource("StandardMaterial3D_dgve3")
+
+[node name="shroomrier" type="CharacterBody3D" unique_id=2087523838]
+script = ExtResource("1_dow1b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2102630412]
+mesh = SubResource("BoxMesh_6s1i5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1436836252]
+shape = SubResource("BoxShape3D_hkbbi")
+
+[node name="attack_area" type="Area3D" parent="." unique_id=300655663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="attack_area" unique_id=924472914]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_dgve3")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=829517224]
+transform = Transform3D(-4.371139e-08, 0.99999994, -4.3711385e-08, 0, -4.3711385e-08, -0.99999994, -1, -4.3711385e-08, 1.9106853e-15, 0, 0.5, 0)
+mesh = SubResource("CapsuleMesh_dgve3")
+
+[connection signal="area_entered" from="attack_area" to="." method="_on_area_3d_area_entered"]

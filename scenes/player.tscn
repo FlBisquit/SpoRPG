@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://dbji2tq8dqiks"]
+
+[ext_resource type="Script" uid="uid://dwj8uye3wk73j" path="res://scripts/player.gd" id="1_y4r1p"]
+[ext_resource type="Texture2D" uid="uid://d1e7kw1s8hyjh" path="res://images/interface/crosshair.png" id="2_d2wvv"]
+[ext_resource type="PackedScene" uid="uid://cuob8b0mvytt" path="res://scenes/spell_choise_menu.tscn" id="3_3v2ag"]
+[ext_resource type="PackedScene" uid="uid://clm4q3ioxmxwi" path="res://images/interface/inventory.tscn" id="4_jej6c"]
+[ext_resource type="Script" uid="uid://cr35l750o7dt5" path="res://scenes/hand.gd" id="5_f1ej7"]
+[ext_resource type="Script" uid="uid://3hxlnjvdwm34" path="res://scenes/cameraSpringarm.gd" id="7_a8ls1"]
+[ext_resource type="Script" uid="uid://wkk8blupgri" path="res://scenes/stuff.gd" id="8_qfm1y"]
+[ext_resource type="AudioStream" uid="uid://ciqh7ml3g67y5" path="res://sounds/hit-marker.mp3" id="9_fulsm"]
+[ext_resource type="Script" uid="uid://dayvyqory3en4" path="res://scenes/item_pickup_area.gd" id="10_4r5pv"]
+[ext_resource type="Script" uid="uid://depo73rm8jd1f" path="res://scenes/grass_manager.gd" id="10_y4r1p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
+albedo_color = Color(0.5058824, 0.7764706, 0.3764706, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sugp2"]
+material = SubResource("StandardMaterial3D_jyhfs")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tbgi4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jyhfs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_85g3d"]
+font_size = 61
+font_color = Color(0, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_choun"]
+font_size = 61
+font_color = Color(1, 0.8070283, 0.19826537, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sugp2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2ff4s"]
+radius = 1.3000001
+
+[node name="Player" type="CharacterBody3D" unique_id=103162598]
+script = ExtResource("1_y4r1p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=621219302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0116568e-07)
+mesh = SubResource("CapsuleMesh_sugp2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=2027699993]
+transform = Transform3D(0.6963256, 0, 0, 0, 0.16969553, 0, 0, 0, 0.2185376, 0.03404162, 0.48610914, -0.4309552)
+mesh = SubResource("CapsuleMesh_tbgi4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=175819959]
+shape = SubResource("CapsuleShape3D_jyhfs")
+
+[node name="DashReload" type="Timer" parent="." unique_id=1586300166]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=642308147]
+
+[node name="crosshair" type="Control" parent="CanvasLayer" unique_id=1054399816]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/crosshair" unique_id=358316203]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.999939
+offset_top = -7.999939
+offset_right = 83.00049
+offset_bottom = 96.00006
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_d2wvv")
+
+[node name="SpellChoiseMenu" parent="CanvasLayer" unique_id=888688480 instance=ExtResource("3_3v2ag")]
+visible = false
+
+[node name="powersInterface" type="Control" parent="CanvasLayer" unique_id=1419824490]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 13.0
+offset_right = 3.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="mana_counter" type="Label" parent="CanvasLayer/powersInterface" unique_id=154622378]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 924.0
+offset_right = 295.0
+offset_bottom = 1008.0
+text = "MANA"
+label_settings = SubResource("LabelSettings_85g3d")
+
+[node name="stamina_counter" type="Label" parent="CanvasLayer/powersInterface" unique_id=2095368868]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 862.0
+offset_right = 385.0
+offset_bottom = 946.0
+text = "STAMINA"
+label_settings = SubResource("LabelSettings_choun")
+
+[node name="Inventory" parent="CanvasLayer" unique_id=1113931991 instance=ExtResource("4_jej6c")]
+visible = false
+
+[node name="Hand" type="Control" parent="CanvasLayer" unique_id=2004188992]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("5_f1ej7")
+
+[node name="Item_Icon" type="TextureRect" parent="CanvasLayer/Hand" unique_id=552593385]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="CameraPivot" type="SpringArm3D" parent="." unique_id=1793432783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.133265, 1.5413253, 0)
+spring_length = 2.0
+margin = 0.3
+script = ExtResource("7_a8ls1")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=2017709295]
+transform = Transform3D(1, 0, 0, 0, 0.948876, 0.31564903, 0, -0.31564903, 0.948876, -0.14000428, 0.7221365, 1.4587713)
+
+[node name="stuff" type="MeshInstance3D" parent="." unique_id=585114857]
+transform = Transform3D(0.09948806, -0.15158442, 0, 0.01010563, 1.4923215, 0, 0, 0, 0.100000024, -0.42099997, 0.011000156, -0.6)
+mesh = SubResource("BoxMesh_sugp2")
+script = ExtResource("8_qfm1y")
+
+[node name="cast_pos" type="Node3D" parent="stuff" unique_id=869436882]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000001, 0, 0, 0, 1.000001, 0.12459755, 0.45517683, 0.008216858)
+
+[node name="hitmarker" type="AudioStreamPlayer3D" parent="." unique_id=111723119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23045516, -5)
+stream = ExtResource("9_fulsm")
+
+[node name="item_pickup area" type="Area3D" parent="." unique_id=757714380]
+script = ExtResource("10_4r5pv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="item_pickup area" unique_id=379695316]
+transform = Transform3D(1.3199999, 0, 0, 0, 1.3199999, 0, 0, 0, 1.3199999, 0.4000001, -0.19999981, -1.7999997)
+shape = SubResource("SphereShape3D_2ff4s")
+
+[node name="grassManager" type="Node3D" parent="." unique_id=1360289028]
+script = ExtResource("10_y4r1p")

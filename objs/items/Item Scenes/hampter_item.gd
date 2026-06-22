@@ -1,12 +1,13 @@
 extends Control
 
 @export var item_res:Item
-@onready var inv = $"../Inventory"
+
+@onready var inventory: Control = $"../Inventory"
 
 
 func _on_timer_timeout() -> void:
 	$Button.disabled = false
 
 func _on_button_pressed() -> void:
-	if inv.add_item(inv.prep_item(self)):
+	if inventory.add_item(inventory.prep_item(self)):
 		queue_free()

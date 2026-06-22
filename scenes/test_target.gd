@@ -7,7 +7,7 @@ var hp_tick = 0.0
 
 var die_effect = load("res://objs/effects/explossion_effect.tscn")
 
-func take_dmg(damage):
+func take_dmg(damage, caster):
 	hp -= damage
 func death() -> void:
 	if hp > 0:
@@ -21,10 +21,8 @@ func death() -> void:
 func _process(delta: float) -> void:
 	death()
 	hp_bar.text = "hp: %s" % hp
-	
 	hp_tick += delta
 	if hp_tick >= 1.0:
 		hp_tick = 0.0
 		if hp < max_hp:
 			hp += 1
-	

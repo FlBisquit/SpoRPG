@@ -27,5 +27,5 @@ func on_hit(_collision) -> void:
 			ray.exclude = [self]
 			var result = get_world_3d().direct_space_state.intersect_ray(ray)
 			if result.get("collider") == body:
-				body.take_dmg(damage)
+				body.take_dmg(damage, caster)
 	hit.emit()

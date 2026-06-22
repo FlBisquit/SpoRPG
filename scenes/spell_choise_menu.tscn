@@ -13,4 +13,5 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_pa2gx")
-bkg_color = Color(0.601223, 0.601223, 0.60122293, 1)
+bkg_color = Color(0.14745495, 0.09186637, 0.07880803, 1)
+highlight_color = Color(0.40383503, 0.26651204, 0.24921629, 1)
