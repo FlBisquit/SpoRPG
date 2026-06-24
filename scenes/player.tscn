@@ -34,6 +34,14 @@ font_color = Color(1, 0.8070283, 0.19826537, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_2ff4s"]
 radius = 1.3000001
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_y4r1p"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D" unique_id=103162598]
 script = ExtResource("1_y4r1p")
 
@@ -143,7 +151,7 @@ mesh = SubResource("BoxMesh_sugp2")
 script = ExtResource("8_qfm1y")
 
 [node name="cast_pos" type="Node3D" parent="stuff" unique_id=869436882]
-transform = Transform3D(1.0000004, 0, 0, 0, 1.0000001, 0, 0, 0, 1.000001, 0.12459755, 0.45517683, 0.008216858)
+transform = Transform3D(1.0000004, 1.1920929e-07, 0, 4.656613e-10, 1.0000001, 0, 0, 0, 1.000001, 0.12459803, 0.45517683, 0.008217335)
 
 [node name="hitmarker" type="AudioStreamPlayer3D" parent="." unique_id=111723119]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23045516, -5)
@@ -158,3 +166,6 @@ shape = SubResource("SphereShape3D_2ff4s")
 
 [node name="grassManager" type="Node3D" parent="." unique_id=1360289028]
 script = ExtResource("10_y4r1p")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=614377689]
+replication_config = SubResource("SceneReplicationConfig_y4r1p")

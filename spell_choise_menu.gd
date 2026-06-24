@@ -5,8 +5,7 @@ signal spell_chosen(spell)
 
 const SPRITE_SIZE = Vector2(32,32)
 
-@onready var player = get_node("/root/Main/Player")  #
-
+var player
 
 @export var bkg_color: Color
 @export var line_color: Color
@@ -17,15 +16,17 @@ const SPRITE_SIZE = Vector2(32,32)
 @export var line_width: int = 5
 
 var buttons = []
-@export var options = []
+var options: Array = []
 var selection:int = 0
 
 func Close():
 	hide()
 	print(options[selection])
 	return options[selection]
-func _ready() -> void:
-	player.equipped_spells_changed.connect(_on_spells_changed)
+func init(p) -> void:
+	player = p
+	if not player.equipped_spells_changed.is_connected(_on_spells_changed):
+		player.equipped_spells_changed.connect(_on_spells_changed)
 	_on_spells_changed(player.equipped_spells)
 func _on_spells_changed(spells: Array) -> void:
 	options = spells.duplicate()

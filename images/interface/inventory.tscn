@@ -118,15 +118,37 @@ offset_bottom = 40.0
 
 [node name="stm_up_1" type="Button" parent="powering_view/up_list" unique_id=754026452]
 layout_mode = 0
-offset_left = 189.0
+offset_left = 205.0
 offset_top = 359.0
-offset_right = 310.0
-offset_bottom = 473.0
+offset_right = 326.0
+offset_bottom = 480.0
 text = "+MAX Stamina"
 script = ExtResource("5_4px20")
 stat = "max_stamina"
 value = 2.0
 cost = 2
+
+[node name="mana_up_1" type="Button" parent="powering_view/up_list" unique_id=411949858]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 359.0
+offset_right = 189.0
+offset_bottom = 480.0
+text = "+mana regen"
+script = ExtResource("5_4px20")
+stat = "mana_regen"
+value = 0.2
+
+[node name="dmg_up_1" type="Button" parent="powering_view/up_list" unique_id=1061216600]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 358.0
+offset_right = 462.0
+offset_bottom = 479.0
+text = "DMG UP"
+script = ExtResource("5_4px20")
+stat = "damage_multi"
+value = 0.15
 
 [node name="items_btn" type="Button" parent="." unique_id=1528368171]
 self_modulate = Color(0.72370744, 0, 0.27495152, 1)

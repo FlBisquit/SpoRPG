@@ -1,7 +1,7 @@
 extends Control
 
-@onready var hand: Control = get_node("/root/Main/Player/CanvasLayer/Hand")
-@onready var inventory: Control = get_node("/root/Main/Player/CanvasLayer/Inventory")
+@onready var hand: Control = get_parent().get_parent().get_parent().get_parent().get_node("Hand")
+@onready var inventory: Control = get_parent().get_parent().get_parent()
 @onready var item_icon: TextureRect = $itemIcon
 @onready var quantity: Label = $quantity
 var slot_num: Vector2i

@@ -33,6 +33,7 @@ func update_view() -> void:
 
 			inventory_view.visible = false
 func _ready() -> void:
+	add_to_group("inventory")
 	for x in range(collumns):
 		items.append([])
 		for y in range(rows):

@@ -1,9 +1,11 @@
 extends Node3D
+
 @export var item_res: Item
 
-var is_on_ground= false
+var is_on_ground = false
 var fall_speed = 4.0
 var rotation_speed = 3.0
+
 @onready var raycast: RayCast3D = $RayCast3D
 
 func _physics_process(delta: float) -> void:
@@ -13,10 +15,15 @@ func _physics_process(delta: float) -> void:
 			raycast.enabled = false
 		else:
 			global_position.y -= fall_speed * delta
-			
-			
-	rotate_y(rotation_speed*delta)
+
+	rotate_y(rotation_speed * delta)
+
+@rpc("any_peer","call_local", "reliable")
+func destroy_item():
+	queue_free()
+
 func pickup(picker: Node) -> void:
 	var inv = picker.get_node("CanvasLayer/Inventory")
+
 	if inv and inv.add_item(inv.prep_item_from_res(item_res)):
-		queue_free()
+		destroy_item.rpc()

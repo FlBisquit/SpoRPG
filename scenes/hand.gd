@@ -5,7 +5,8 @@ extends Control
 var item: Dictionary
 var item_count = 0
 var dragging = false
-
+func _ready() -> void:
+	add_to_group("hand")
 func _process(delta: float) -> void:
 	global_position = get_global_mouse_position()
 
@@ -18,12 +19,17 @@ func start_drag(new_item, count):
 func is_empty() -> bool:
 	return item.is_empty()
 
+@rpc("call_local", "reliable")
+func spawn_dropped_item(item_path: String, pos: Vector3):
+	var instance = load(item_path).instantiate()
+	instance.global_position = pos
+	get_parent().add_child(instance)
+
 func drop_item():
 	if not item.is_empty():
-		for i in item_count:
-			var instance = load(item['item_path']).instantiate()
-			instance.global_position = stuff.global_position
-			get_parent().add_child(instance)
+		for i in range(item_count):
+			spawn_dropped_item.rpc(item["item_path"], stuff.global_position)
+
 	clear()
 	
 func clear():

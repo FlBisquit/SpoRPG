@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://b3b4pdkrh11k"]
+
+[ext_resource type="Script" uid="uid://dn8bskwn7h2ti" path="res://objs/npcs/sporeier.gd" id="1_jgtoq"]
+[ext_resource type="Texture2D" uid="uid://cwpvap86tfmdc" path="res://images/misc/0308f996fb4710c18f5915a638db8365.jpg" id="2_e3k3e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jg802"]
+albedo_texture = ExtResource("2_e3k3e")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6s1i5"]
+material = SubResource("StandardMaterial3D_jg802")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hkbbi"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jgtoq"]
+height = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgve3"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dgve3"]
+material = SubResource("StandardMaterial3D_dgve3")
+
+[node name="sporeier" type="CharacterBody3D" unique_id=2087523838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6345236)
+script = ExtResource("1_jgtoq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2102630412]
+mesh = SubResource("BoxMesh_6s1i5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1436836252]
+shape = SubResource("BoxShape3D_hkbbi")
+
+[node name="attack_area" type="Area3D" parent="." unique_id=300655663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="attack_area" unique_id=924472914]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -1.69125e-07, 3.8691292)
+shape = SubResource("CylinderShape3D_jgtoq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=829517224]
+transform = Transform3D(-0.9985012, 0.054730024, -4.3711385e-08, 4.3645873e-08, -2.392328e-09, -0.99999994, -0.054730028, -0.9985011, 3.657286e-15, -0.029077504, 0.5, 0.53049344)
+mesh = SubResource("CapsuleMesh_dgve3")
+
+[connection signal="area_entered" from="attack_area" to="." method="_on_area_3d_area_entered"]

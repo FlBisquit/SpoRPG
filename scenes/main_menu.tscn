@@ -1,0 +1,196 @@
+[gd_scene format=3 uid="uid://cmqfar1ihu5gu"]
+
+[ext_resource type="Script" uid="uid://due8q0dtb0cn1" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_l6cm7"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_l6cm7"]
+events = [SubResource("InputEventKey_l6cm7")]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2ff4s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_y25e7"]
+size = Vector3(2.1000001, 9.900001, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2ff4s"]
+size = Vector3(3.1000001, 89.4, 1.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sc8fa"]
+size = Vector3(1, 105, 2.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bprrw"]
+size = Vector3(64.700005, 28, 89.6)
+
+[sub_resource type="Curve3D" id="Curve3D_l6cm7"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 2, 10.91, 0, 0, 0, 0, 0, 0, -30.258682, 2, -159.4985, 0, 0, 0, 0, 0, 0, -20.766, 4.315, -192.416),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[node name="main_menu" type="Node3D" unique_id=2033405409]
+script = ExtResource("1_l6cm7")
+
+[node name="main_ui" type="Control" parent="." unique_id=733996649]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="start" type="Button" parent="main_ui" unique_id=375729564]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1759.0
+offset_top = 178.0
+offset_right = -1466.0
+offset_bottom = 316.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 67
+text = "start"
+
+[node name="settings" type="Button" parent="main_ui" unique_id=571860458]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 350.0
+offset_right = 454.493
+offset_bottom = 488.0
+theme_override_font_sizes/font_size = 67
+text = "settings"
+
+[node name="quit" type="Button" parent="main_ui" unique_id=300066941]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 525.0
+offset_right = 454.493
+offset_bottom = 663.0
+theme_override_font_sizes/font_size = 67
+shortcut = SubResource("Shortcut_l6cm7")
+text = "quit
+"
+
+[node name="join_ui" type="Control" parent="." unique_id=2077298636]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="host" type="Button" parent="join_ui" unique_id=121536687]
+layout_mode = 0
+offset_left = 479.0
+offset_top = 425.0
+offset_right = 740.0
+offset_bottom = 562.0
+theme_override_font_sizes/font_size = 67
+text = "host"
+
+[node name="join" type="Button" parent="join_ui" unique_id=936801126]
+layout_mode = 0
+offset_left = 479.0
+offset_top = 586.0
+offset_right = 740.0
+offset_bottom = 721.0
+theme_override_font_sizes/font_size = 67
+text = "Join"
+
+[node name="back_to_menu" type="Button" parent="join_ui" unique_id=1943878314]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 991.0
+offset_right = 262.0
+offset_bottom = 1112.0
+rotation = 3.1415927
+theme_override_font_sizes/font_size = 67
+text = "^"
+
+[node name="world" type="Node3D" parent="." unique_id=657091399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 10.91)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="world" unique_id=523639361]
+transform = Transform3D(84.19411, 0, 0, 0, 5.14, 0, 0, 0, 152.21661, 0, -2.9, -107.84131)
+mesh = SubResource("PlaneMesh_2ff4s")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="world" unique_id=449884734]
+transform = Transform3D(6.1628046, 0, 3.9233713, 0, 1, 0, -2.6286588, 0, 9.1982155, -8.413292, 1.5500007, -4.184869)
+mesh = SubResource("BoxMesh_y25e7")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="world" unique_id=1014542950]
+transform = Transform3D(6.162805, 0, -3.9233716, 0, 1, 0, 2.6286592, 0, 9.198216, -17.017242, 1.6500001, -216.83118)
+mesh = SubResource("BoxMesh_y25e7")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="world" unique_id=1737824473]
+transform = Transform3D(23.492819, -1.8626451e-09, 16.18995, 2.5497508, 0.8544588, -40.261143, -4.193603, 0.5195191, 66.21794, -58.29891, -15.28825, -90.63129)
+mesh = SubResource("BoxMesh_2ff4s")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="world" unique_id=2044377603]
+transform = Transform3D(19.024935, -0.60767764, -3.8344011, 5.3606877, 0.21560894, 75.25824, -13.613046, -0.7643561, 24.27721, -71.33653, 48.173744, -246.75655)
+mesh = SubResource("BoxMesh_2ff4s")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="world" unique_id=473250350]
+transform = Transform3D(-14.335128, 0.8005562, -3.8344002, -6.5670977, -0.14664581, 75.258224, 18.093573, 0.58103704, 24.2772, 32.112495, 50.35094, -246.64447)
+mesh = SubResource("BoxMesh_2ff4s")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="world" unique_id=1585296930]
+transform = Transform3D(-23.796871, -0.12045787, -3.8344002, -0.20957717, -0.31032488, 75.25823, -3.1088657, 0.94296753, 24.277199, 59.71689, 23.169922, -158.02467)
+mesh = SubResource("BoxMesh_2ff4s")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="world" unique_id=1583925988]
+transform = Transform3D(1.8263786, -0.12045783, -78.36224, -22.799425, -0.3103249, -2.7923996, -7.269846, 0.9429676, -10.929228, -15.125858, 89.04002, -200.5227)
+mesh = SubResource("BoxMesh_2ff4s")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="world" unique_id=2102185614]
+transform = Transform3D(21.011148, 2.9802322e-08, 38.261467, 6.025787, 0.8544588, -36.00815, -9.910679, 0.5195191, 59.222992, 28.69252, -16.697802, -84.07831)
+mesh = SubResource("BoxMesh_sc8fa")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="world" unique_id=335048932]
+transform = Transform3D(0.91889113, -0.107944906, 0.3794562, 0.11667074, 0.9931707, 3.7252903e-09, -0.3768647, 0.044271432, 0.9252097, -6.9592853, 23.195797, -105.2722)
+mesh = SubResource("BoxMesh_bprrw")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="world" unique_id=1210926100]
+transform = Transform3D(0.9188912, 0.08283419, 0.38571697, 0.11667074, 0.87691766, -0.46626538, -0.3768647, 0.47344905, 0.7961275, -16.081556, 42.8842, -121.4194)
+mesh = SubResource("BoxMesh_bprrw")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="world" unique_id=1925228807]
+transform = Transform3D(0.34577417, 0.8671274, 0.35851133, -0.92849356, 0.37133887, -0.0026469529, -0.13542439, -0.33196023, 0.93352157, -81.16195, 2.1495862, -175.46011)
+mesh = SubResource("BoxMesh_bprrw")
+
+[node name="Path3D" type="Path3D" parent="." unique_id=2837154]
+curve = SubResource("Curve3D_l6cm7")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D" unique_id=475865787]
+transform = Transform3D(0.9845976, 0, 0.17483045, 0, 0.9999973, 0, -0.17483063, 0, 0.9845966, 0.65475804, 2, 10.793737)
+h_offset = 0.665
+
+[node name="Camera3D" type="Camera3D" parent="Path3D/PathFollow3D" unique_id=1843258368]
+transform = Transform3D(0.986206, -0.00786958, -0.16533467, 0.002982515, 0.99955183, -0.029786207, 0.16549501, 0.028882235, 0.98578745, 0, 0.9000001, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1946222964]
+transform = Transform3D(1, 0, 0, 0, 0.2990408, 0.9542403, 0, -0.9542403, 0.2990408, 0, 0, 0)
+shadow_enabled = true
+
+[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=1344568615]
+transform = Transform3D(1, 0, 0, 0, -0.02094242, 2.439465, 0, -0.9997807, -0.051099516, -17.6, 28.367292, -200.34967)
+light_color = Color(0, 0.5137255, 1, 1)
+light_energy = 2.653
+light_indirect_energy = 4.071
+light_volumetric_fog_energy = 6.997
+light_size = 0.91
+light_specular = 3.05
+area_range = 66.495
+area_attenuation = 0.54
+area_size = Vector2(13.585, 13.585)
+
+[connection signal="pressed" from="main_ui/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="main_ui/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="main_ui/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="join_ui/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="join_ui/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="join_ui/back_to_menu" to="." method="_on_back_to_menu_pressed"]

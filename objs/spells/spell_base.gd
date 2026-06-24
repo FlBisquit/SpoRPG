@@ -6,6 +6,7 @@ var caster_name = ""
 var spell_name: String = ""
 var mana_cost = 15
 var is_projectile = true
+var damage_multi = 1
 
 var gravity_scale: float = 0.0
 var speed = 50
@@ -49,7 +50,7 @@ func on_hit(collision) -> void:
 	if collision:
 		var body = collision.get_collider()
 		if body.has_method("take_dmg"):
-			body.take_dmg(damage, caster)
+			body.take_dmg(damage*damage_multi, caster)
 			hit.emit()
 
 func activate(who) -> void:

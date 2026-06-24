@@ -27,7 +27,8 @@ func _on_accept_btn_pressed() -> void:
 	player.current_skill_points -= chosen_upgrade.cost
 	player.apply_upgrade(chosen_upgrade.stat, chosen_upgrade.value)
 	skill_point_counter.text = str(player.current_skill_points)
-	chosen_upgrade.button_pressed = false
+	#chosen_upgrade.button_pressed = false
+	chosen_upgrade.queue_free()
 	chosen_upgrade = null
 func _process(delta: float) -> void:
 	skill_point_counter.text = str(player.current_skill_points)

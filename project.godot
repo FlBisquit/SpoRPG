@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SpoRPG"
-run/main_scene="uid://cv78m2utl3ogs"
+run/main_scene="uid://cmqfar1ihu5gu"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://images/icon.svg"
 
