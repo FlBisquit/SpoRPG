@@ -5,8 +5,11 @@ extends Node3D
 
 func _ready() -> void:
 	print("main ready, id: ", multiplayer.get_unique_id())
-	multiplayer.peer_connected.connect(spawn_player)
+	multiplayer.peer_connected.connect(_on_peer_connected)
 	spawn_player(multiplayer.get_unique_id())
+
+func _on_peer_connected(id: int) -> void:
+	spawn_player(id)
 
 func spawn_player(id: int) -> void:
 	var player = player_scene.instantiate()
@@ -17,4 +20,3 @@ func spawn_player(id: int) -> void:
 	
 	if id == multiplayer.get_unique_id():
 		player.get_node("CanvasLayer/SpellChoiseMenu").init(player)
-		#player.get_node("CanvasLayer/Inventory").init(player)

@@ -11,6 +11,9 @@ var last_attacker = null
 @export var xp_reward: int = 100
 @export var attack_range: float = 3.0
 
+var wander_target: Vector3 = Vector3.ZERO
+var wander_timer: float = 0.0
+
 var target = null
 var target_chase: bool = false
 var attack_speed = Timer.new()
@@ -24,6 +27,8 @@ var can_attack: bool = true
 var die_effect = load("res://objs/effects/explossion_effect.tscn")
 
 func _ready():
+	await get_tree().process_frame
+	spawn_cords = global_position
 	spawn_cords = global_position
 	add_child(attack_speed)
 	attack_speed.wait_time = 2.0
@@ -101,20 +106,21 @@ func _physics_process(delta: float) -> void:
 		target_pos.y = global_position.y
 		var distance = global_position.distance_to(target_pos)
 		var direction = (target_pos - global_position).normalized()
+		var target_angle = atan2(direction.x, direction.z)
 
 		if should_retreat(distance):
 			var retreat = get_retreat_direction(target_pos)
 			velocity.x = retreat.x * max_speed
 			velocity.z = retreat.z * max_speed
-			rotation.y = atan2(direction.x, direction.z)
+			rotation.y = lerp_angle(rotation.y, target_angle, 5.0 * delta)
 		elif distance > attack_range:
 			velocity.x = direction.x * max_speed
 			velocity.z = direction.z * max_speed
-			rotation.y = atan2(direction.x, direction.z)
+			rotation.y = lerp_angle(rotation.y, target_angle, 5.0 * delta)
 		else:
 			velocity.x = 0
 			velocity.z = 0
-			rotation.y = atan2(direction.x, direction.z)
+			rotation.y = lerp_angle(rotation.y, target_angle, 5.0 * delta)
 			if can_attack:
 				for body in attack_area.get_overlapping_bodies():
 					if body == self:
@@ -123,12 +129,20 @@ func _physics_process(delta: float) -> void:
 						try_attack(body)
 						break
 	else:
-		if spawn_cords != Vector3.ZERO:
-			var direction = (spawn_cords - global_position).normalized()
-			velocity.x = direction.x * min_speed
-			velocity.z = direction.z * min_speed
-			rotation.y = atan2(direction.x, direction.z)
-
+		wander_timer -= delta
+		if wander_timer <= 0:
+			wander_timer = randf_range(3.0, 7.0)
+			wander_target = spawn_cords + Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
+		if wander_target != Vector3.ZERO:
+			var dir = (wander_target - global_position).normalized()
+			var dist = global_position.distance_to(wander_target)
+			if dist > 0.5:
+				velocity.x = dir.x * min_speed
+				velocity.z = dir.z * min_speed
+				rotation.y = lerp_angle(rotation.y, atan2(dir.x, dir.z), 3.0 * delta)
+			else:
+				velocity.x = 0
+				velocity.z = 0
 	move_and_slide()
 
 func _process(delta: float) -> void:

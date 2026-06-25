@@ -37,7 +37,7 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_host_pressed() -> void:
-	print("host pressed")  # ← видишь это в output?
+	print("host pressed")
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server(7777, 32)
 	multiplayer.multiplayer_peer = peer
@@ -47,7 +47,7 @@ func _on_join_pressed() -> void:
 	print("join pressed")
 	var peer = ENetMultiplayerPeer.new()
 	var err = peer.create_client("127.0.0.1", 7777)
-	print("client error: ", err)  # должно быть 0
+	print("client error: ", err)
 	multiplayer.multiplayer_peer = peer
 	
 	multiplayer.connected_to_server.connect(func():

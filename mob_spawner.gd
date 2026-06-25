@@ -29,15 +29,20 @@ func _spawn_mob() -> void:
 	if mob_scene == null:
 		return
 	var mob = mob_scene.instantiate()
-	mob.position = global_position
-	get_parent().add_child.call_deferred(mob)
+	var offset = Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
+	add_child(mob, true)
+	mob.set_deferred("position", global_position + offset)
 	spawned_mobs.append(mob)
 	mob.tree_exited.connect(_on_mob_died)
 
 func _on_mob_died() -> void:
-	if not multiplayer.is_server():
+	if not multiplayer or not multiplayer.is_server():
 		return
 	await get_tree().create_timer(respawn_time).timeout
+	if not is_instance_valid(self):
+		return
+	if not multiplayer or not multiplayer.is_server():
+		return
 	spawned_mobs = spawned_mobs.filter(func(m): return is_instance_valid(m))
 	if spawned_mobs.size() < max_spawnables and avaible_to_spawn:
 		_spawn_mob()

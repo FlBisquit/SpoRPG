@@ -4,3 +4,7 @@
 
 [node name="mob_spawner" type="Node3D" unique_id=590221050]
 script = ExtResource("1_ljl1v")
+
+[node name="MultiplayerSpawner2" type="MultiplayerSpawner" parent="." unique_id=1048658958]
+_spawnable_scenes = PackedStringArray("uid://dgxk1ymxflodf", "uid://b3b4pdkrh11k")
+spawn_path = NodePath("..")

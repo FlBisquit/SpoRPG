@@ -29,7 +29,6 @@ offset_bottom = 913.0
 color = Color(0.2647012, 0.22188371, 0.22552317, 1)
 
 [node name="inventoryView" type="Control" parent="." unique_id=1185143161]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,6 +80,7 @@ offset_right = 89.19212
 offset_bottom = 165.564
 
 [node name="powering_view" type="Control" parent="." unique_id=1457980825]
+visible = false
 layout_mode = 1
 anchor_left = 0.61800003
 anchor_top = 0.56
@@ -125,7 +125,6 @@ offset_bottom = 480.0
 text = "+MAX Stamina"
 script = ExtResource("5_4px20")
 stat = "max_stamina"
-value = 2.0
 cost = 2
 
 [node name="mana_up_1" type="Button" parent="powering_view/up_list" unique_id=411949858]
